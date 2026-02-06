@@ -6,10 +6,12 @@ import { readFileSync } from "node:fs";
 let emptyDay: Image;
 let currentDay: Image;
 let pastDay: Image;
+let lockScreen: Image;
 (async () => {
 	emptyDay = await loadImage(readFileSync("./src/assets/empty-day.png"));
 	currentDay = await loadImage(readFileSync("./src/assets/current-day.png"));
 	pastDay = await loadImage(readFileSync("./src/assets/past-day.png"));
+	lockScreen = await loadImage(readFileSync("./src/assets/lock-screen.png"));
 })();
 
 const app = new Hono();
@@ -29,10 +31,10 @@ app.get("/", async (c) => {
 	const oneDay = 1000 * 60 * 60 * 24;
 	const today = Math.floor(diff / oneDay) - 1;
 
-	const columns = 15;
+	const columns = 16;
 	const size = 40;
-	const padx = 100;
-	const pady = 500;
+	const padx = 70;
+	const pady = 550;
 	const gap = 20;
 	let x = padx;
 	let y = pady;
@@ -48,6 +50,10 @@ app.get("/", async (c) => {
 
 		x += size + gap;
 	}
+
+	// opacity 0.3 lock screen for reference
+	// ctx.globalAlpha = 0.3;
+	// ctx.drawImage(lockScreen, 0, 0, width, height);
 
 	const buffer = new Uint8Array(canvas.toBuffer("image/png"));
 
