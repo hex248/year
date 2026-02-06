@@ -27,7 +27,7 @@ app.get("/", async (c) => {
 
 	const now = new Date();
 	const start = new Date(now.getFullYear(), 0, 0);
-	const diff = now - start;
+	const diff = now.getTime() - start.getTime();
 	const oneDay = 1000 * 60 * 60 * 24;
 	const today = Math.floor(diff / oneDay) - 1;
 
